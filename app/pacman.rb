@@ -2,7 +2,7 @@
 
 # Subclass that represents the Pacman Character
 class Pacman < GameCharacter
-  def initialize
-    
-  end
+  def calculate_position; end
+
+  def calculate_movement; end
 end

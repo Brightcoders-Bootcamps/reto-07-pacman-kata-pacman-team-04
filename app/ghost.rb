@@ -2,7 +2,5 @@
 
 # Subclass that represents the Ghost Character
 class Ghost < GameCharacter
-  def initialize
-    
-  end
+  def calculate_position(pacman_position); end
 end
