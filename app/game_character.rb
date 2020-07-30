@@ -7,7 +7,7 @@ class GameCharacter
   def initialize
     @direction = 0
     @speed = 1
-    @position = Array.new(2) { 0 }
+    @position = { row: 0, col: 0 }
   end
 
   def calculate_position; end
