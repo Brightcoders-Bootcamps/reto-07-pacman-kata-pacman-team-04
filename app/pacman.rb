@@ -9,7 +9,7 @@ class Pacman < GameCharacter
     @position[:row] = 7
     @position[:col] = 32
     @direction = 1
-    @character = "<"
+    @character = '<'
   end
 
   def calculate_position; end
