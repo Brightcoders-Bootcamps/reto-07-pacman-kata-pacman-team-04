@@ -17,18 +17,14 @@ class Game
   end
 
   def ghost_appear
-    while true do
-      if @ghosts.size < 6
-        @ghosts << Ghost.new(@board)
-      end
+    while @ghosts.size < 6 do
+      @ghosts << Ghost.new(@board)
       sleep(8)
     end
   end
 
-  def game
-    points = 0
-    level = 1
-    velocity = 0.5
+  def start_game(points = 0, level = 1, velocity = 0.7)
+    game_instructions
     loop do
       level, velocity = level_up(level, velocity)
       pacman, position = @pacman, @pacman.position
@@ -36,19 +32,25 @@ class Game
       @ghosts.map{ |ghost| ghost.calculate_movement(position)}
       @board.print_b(@ghosts, pacman)
       points += @board.calculate_points(position)
-      print "Points: #{points}, level: #{level}\n\rpress enter to exit...\n\r"
+      print "Level: #{level}\tPoints: #{points}\n\r\n\rPress enter to exit...\n\r"
       sleep(velocity)
     end
   end
 
   private
 
+  def game_instructions
+    puts "Press the following keys 1 or more times to make Pacman move\n\r"
+    puts "W --> Up\n\rA --> Left\n\rS --> Down\n\rD --> Right"
+    sleep 5
+  end
+
   def level_up(level, velocity)
     flag = false
     @board.board_numeric.map { |element| (flag = true) if (element.include?(3) || element.include?(4)) }
     unless flag
       @board = Board.new(@stage)
-      return level + 1, velocity - 0.02
+      return level + 1, velocity - 0.02 Oye Pao, puedes abrir una terminal de windows?
     end
     return level, velocity
   end

@@ -1,20 +1,14 @@
-# frozen_string_literal: true
+# frozen_string_literal: false
 
-require_relative 'game.rb'
+require 'timeout'
+require_relative "game.rb"
 
-# Class that represents the main class
-class Main
-  def initialize
-    @board_file = File.open('../board/new_tab.txt', mode: 'w')
-    @game = Game.new(@board_file)
-  end
+game = Game.new('/board/board1.txt')
 
-  def start_threads
-    @ghosts = Thread.new { game.produce_ghost }
-    @capture = Thread.new { game.capture_direction }
-    @board = Thread.new { game.game }
-  end
-end
+capture = Thread.new { game.pacman.capture_direction }
+board = Thread.new { game.start_game }
 
-Main.new
-print @game
+gets.chomp
+
+Thread.kill(capture)
+Thread.kill(board)
