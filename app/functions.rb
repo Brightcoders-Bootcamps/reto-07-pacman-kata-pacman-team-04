@@ -24,5 +24,5 @@ def wall?(elem)
   result = false
   result = true if elem == '║' || elem == '╗' || elem == '╚' || elem == '╝'
   result = true if elem == '╔' || elem == '═' || elem == '╩' || elem == '╦'
-  result
+  result 
 end

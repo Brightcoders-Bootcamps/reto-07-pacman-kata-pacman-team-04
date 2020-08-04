@@ -10,6 +10,19 @@ class Board
     @array_board = IO.readlines(@board_file)
   end
 
+  def board_level
+    if level == 1 
+      file_name = File.open('../board/board1.txt').read
+    end
+    if level == 2
+      file_name = File.open('../board/board2.txt').read
+    end
+    if level == 3
+      file_name = File.open('../board/board3.txt').read
+    end
+    file_name
+  end
+
   def copy_file
     file_name = File.open('../board/board1.txt').read
     file_name.each_line do |line|
@@ -19,21 +32,54 @@ class Board
   end
 
   def eat_dots(pacman)
-    pacman_position_x = pacman.position[:row].to_i
-    pacman_position_y = pacman.position[:col].to_i
-    # wraps_around(pacman_position_x, pacman_position_y)
-    @array_board[pacman_position_x][pacman_position_y] = ' '
-    pacman_new_position(pacman_position_x, pacman_position_y)
+    @pacman_position_x = pacman.position[:row].to_i
+    @pacman_position_y = pacman.position[:col].to_i
+    # wraps_around
+    @array_board[@pacman_position_x][@pacman_position_y] = ' '
+    pacman_new_position
+    move_ghost
   end
 
-  def pacman_new_position(pacman_position_x, pacman_position_y)
-    @array_board[pacman_position_x + 1][pacman_position_y + 1] = 'v'
+  def pacman_new_position
+    @array_board[@pacman_position_x][@pacman_position_y - 1] = 'v' #w
+    @array_board[@pacman_position_x + 1][@pacman_position_y] = '<' #d
+    @array_board[@pacman_position_x - 1][@pacman_position_y] = '>' #a
+    @array_board[@pacman_position_x][@pacman_position_y + 1] = '^' #s
     @prints.prints_array(@array_board)
   end
 
-  def wraps_around(pacman_position_x, pacman_position_y)
-    pacman_position_y.zero? && pacman_position_x == @array_board.lenght ? posicion[otro_extremo] : ''
+  def wraps_around   
+    @pacman_position_x.zero ? @pacman_position_x = @array_board.lenght : ""
+    @pacman_position_x == @array_board.lenght ? @pacman_position_x = 0 : ""
+    @pacman_position_y.zero ? @pacman_position_y = @array_board.lenght : ""
+    @pacman_position_y == @array_board.lenght ? @pacman_position_y= 0 : ""
   end
+
+  def move_ghost
+    num_random = rand(1..4)
+    ghost_position_x = rand(1..50)
+    ghost_position_y = rand(1..15)
+    if num_random == 1
+      @array_board[ghost_position_x][ghost_position_y - 1] = 'N' #w
+    end
+    if num_random == 2
+      @array_board[ghost_position_x][ghost_position_y + 1] = 'N' #s
+    end
+    if num_random == 3
+      @array_board[ghost_position_x + 1][ghost_position_y] = 'N' #d
+    end
+    if num_random == 4
+      @array_board[ghost_position_x - 1][ghost_position_y] = 'N' #a
+    end
+    @prints.prints_array(@array_board)
+  end 
+
+  #def is_wall
+   # if @array_board[@pacman_position_x][@pacman_position_y] == '║' || @array_board[@pacman_position_x][@pacman_position_y] == '╗' || @array_board[@pacman_position_x][@pacman_position_y] == '╚' || @array_board[@pacman_position_x][@pacman_position_y] == '╝' || @array_board[@pacman_position_x][@pacman_position_y] == '╔' || @array_board[@pacman_position_x][@pacman_position_y] == '═' |°|    @array_board[@pacman_position_x][@pacman_position_y] == '╩' || @array_board[@pacman_position_x][@pacman_position_y] == '╦' 
+    #  print " wall"
+    #end
+  #end
+
 end
 
 board = Board.new
