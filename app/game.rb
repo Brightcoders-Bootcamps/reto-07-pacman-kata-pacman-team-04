@@ -2,7 +2,6 @@
 
 require "io/console"
 require_relative "pacman"
-require_relative "ghost"
 require_relative "board"
 require_relative "functions"
 
@@ -13,24 +12,16 @@ class Game
     @stage = arguments
     @board = Board.new(arguments)
     @pacman = Pacman.new(@board)
-    @ghosts = Array.new()
-  end
-
-  def ghost_appear
-    while @ghosts.size < 6 do
-      @ghosts << Ghost.new(@board)
-      sleep(8)
-    end
   end
 
   def start_game(points = 0, level = 1, velocity = 0.7)
     game_instructions
     loop do
+      puts @board.board_numeric
       level, velocity = level_up(level, velocity)
       pacman, position = @pacman, @pacman.position
       pacman.calculate_movement
-      @ghosts.map{ |ghost| ghost.calculate_movement(position)}
-      @board.print_b(@ghosts, pacman)
+      @board.print_b(pacman)
       points += @board.calculate_points(position)
       print "Level: #{level}\tPoints: #{points}\n\r\n\rPress enter to exit...\n\r"
       sleep(velocity)
@@ -50,7 +41,7 @@ class Game
     @board.board_numeric.map { |element| (flag = true) if (element.include?(3) || element.include?(4)) }
     unless flag
       @board = Board.new(@stage)
-      return level + 1, velocity - 0.02 Oye Pao, puedes abrir una terminal de windows?
+      return level + 1, velocity - 0.02
     end
     return level, velocity
   end
