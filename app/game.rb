@@ -6,10 +6,10 @@ require_relative "board"
 require_relative "functions"
 
 class Game 
-  attr :stage, :pacman
+  attr_accessor :stage, :pacman
 
   def initialize
-    @points, @level, @speed = 0, 1, 0.5
+    @points, @level, @speed = 0, 1, 0.6
     @posibilites = [{:x => -1, :y => 0}, {:x => 1, :y => 0}, {:x => 0, :y => 1},{:x => 0, :y => -1}]
     @board = Board.new
     @pacman = Pacman.new(@board, @posibilites)
@@ -19,7 +19,7 @@ class Game
   def start_game
     loop do
       change_state
-      print "\n\r\n\rLevel: #{@level}\tPoints: #{@points}\n\r\n\rPress enter to exit...\n\r"
+      print "\n\r\n\rLevel: #{@level}    Score: #{@points}\n\r\n\rPress enter to exit...\n\r"
       sleep(@speed)
     end
   end
@@ -34,7 +34,7 @@ class Game
   private
 
   def game_instructions
-    puts "Press the following keys 1 or more times to make Pacman move\n\r"
+    puts "Press the following keys 1 or more times until Pacman moves\n\r"
     puts "W --> Up\n\rA --> Left\n\rS --> Down\n\rD --> Right"
     sleep 5
   end

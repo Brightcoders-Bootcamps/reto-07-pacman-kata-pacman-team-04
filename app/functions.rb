@@ -11,10 +11,14 @@ end
 def show_board(pacman, board)
   system('clear')
   board.each_with_index do |row, index_i|
-    row.each_with_index do |cols, index_j|
-      cols = pacman.show_board_character(cols, [index_i, index_j])
-      print cols
-    end
+    show_rows(row, index_i)
     print "\r"
+  end
+end
+
+def show_rows(row, index_i)
+  row.each_with_index do |cols, index_j|
+    cols = pacman.show_board_character(cols, [index_i, index_j])
+    print cols
   end
 end

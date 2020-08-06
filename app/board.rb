@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
 class Board
-  attr :board, :flag_board
+  attr_accessor :board, :flag_board
 
   def initialize
     @board, @flag_board = [], []
-    stream = File.open(File.expand_path('..', __dir__) + '/board/board1.txt')
-    @board = stream.map { |element| element.split(//) }
+    @stream = File.open(File.expand_path('../', __dir__) + '/board/board1.txt')
+    @board = @stream.map { |element| element.split(//) }
     @flag_board = @board.map { |element| element.map { |element| find_numeric(element, 0) } }
   end
 
