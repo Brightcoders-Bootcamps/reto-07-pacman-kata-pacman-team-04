@@ -1,39 +1,30 @@
 # frozen_string_literal: true
 
-require_relative 'file_opener.rb'
-
 class Board
-  attr_accessor :board, :board_numeric
+  attr :board, :flag_board
 
-  def initialize(file)
+  def initialize
     @board = Array.new() 
-    @board_numeric = Array.new()
-    stream = File.open(File.expand_path("../../", __FILE__) + file)
-    open_file(stream.to_a, @board, @board_numeric)
-  end
-
-  def print_b(pacman)
-    system("clear")
-    @board.each_with_index do |row, index_i|
-      row.each_with_index do |col, index_j|
-        print(helper_print_b_character(pacman, col, [index_i, index_j]))
-      end
-      print "\n\r"
-    end
+    @flag_board = Array.new()
+    stream = File.open(File.expand_path("../../", __FILE__) + '/board/board1.txt')
+    @board = stream.map{ |element| element.split(//) }
+    @flag_board = @board.map { |element| element.map{ |element| find_numeric(element, 0) }}
   end
 
   def can_move?(row, col, condition)
-    return (@board_numeric[row][col] > condition) ? true : false 
+    return (@flag_board[row][col] > condition) ? true : false 
   end
 
   def calculate_points(pacman)
-    pac_x, pac_y = pacman[:x], pacman[:y]
-    if can_move?(pac_x, pac_y, 2)
-      @board[pac_x][pac_y] = " "
-      @board_numeric[pac_x][pac_y] = 2
-      return 1
-    end
+    return 1 if check_can_move(pacman[:x], pacman[:y]) == 1
     return 0
   end
 
+  def check_can_move(row, col)
+    if can_move?(row, col, 2)
+      @board[row][col] = " "
+      @flag_board[row][col] = 2
+      return 1
+    end
+  end
 end
