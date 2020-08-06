@@ -1,7 +1,7 @@
 # frozen_string_literal: false
 
 require 'timeout'
-require_relative "game.rb"
+require_relative 'game.rb'
 
 game = Game.new
 

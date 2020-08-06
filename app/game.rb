@@ -18,13 +18,17 @@ class Game
 
   def start_game
     loop do
-      level_up
-      @pacman.calculate_movement
-      show_board(@pacman, @board.board)
-      @points += @board.calculate_points(@pacman.position)
+      change_state
       print "\n\r\n\rLevel: #{@level}\tPoints: #{@points}\n\r\n\rPress enter to exit...\n\r"
       sleep(@speed)
     end
+  end
+
+  def change_state
+    level_up
+    @pacman.calculate_movement
+    show_board(@pacman, @board.board)
+    @points += @board.calculate_points(@pacman.position)
   end
 
   private
