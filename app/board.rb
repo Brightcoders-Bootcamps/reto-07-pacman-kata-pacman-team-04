@@ -16,8 +16,7 @@ class Board
     system("clear")
     @board.each_with_index do |row, index_i|
       row.each_with_index do |col, index_j|
-        col = helper_print_b_character(pacman, col, [index_i, index_j])
-        print col
+        print(helper_print_b_character(pacman, col, [index_i, index_j]))
       end
       print "\n\r"
     end

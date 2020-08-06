@@ -3,7 +3,7 @@
 require 'timeout'
 require_relative "game.rb"
 
-game = Game.new('/board/board1.txt')
+game = Game.new
 
 capture = Thread.new { game.pacman.capture_direction }
 board = Thread.new { game.start_game }
